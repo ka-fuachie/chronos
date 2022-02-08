@@ -1,2 +1,2 @@
 "use strict";
-alert('loaded 🔄');
+console.log('Loaded🔃');
