@@ -47,5 +47,6 @@ export function updateTheme(setting) {
         default:
             break;
     }
+    localStorage.setItem('theme', newSetting.toString());
     return newSetting;
 }

@@ -56,5 +56,6 @@ export function updateTheme(setting?: Theme): Theme {
       break;
   }
 
+  localStorage.setItem('theme', newSetting!.toString())
   return newSetting!
 }
