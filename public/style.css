@@ -12,6 +12,43 @@ body{
   min-height: 100vh;
 }
 
+
+/***************/
+/** VARIABLES **/
+/***************/
+
+:root {
+  --clr-text-dark: 0 0% 20%;
+  --clr-text-light: 0 0% 91%;
+
+  --clr-bg-dark: 0 0% 7%;
+  --clr-bg-light: 0 0% 96%;
+
+  --clr-black: 0 0% 0%;
+  --clr-white: 0 0% 100%;
+
+  --fs-400: 0.875rem;
+  --fs-500: 1rem;
+  --fs-600: 1.25rem;
+  --fs-700: 1.5rem;
+
+  --ff-sans: 'Poppins', sans-serif;
+  --ff-cursive: 'Indie Flower', cursive;
+}
+
+body {
+  --clr-text: var(--clr-text-dark);
+  --clr-bg: var(--clr-bg-light);
+  --clr-theme: var(--clr-black);
+}
+
+body.dark{
+  --clr-text: var(--clr-text-light);
+  --clr-bg: var(--clr-bg-dark);
+  --clr-theme: var(--clr-white);
+}
+
+
 /***************/
 /**   PAGE    **/
 /***************/
@@ -20,8 +57,11 @@ body{
 body{
   display: flex;
   flex-direction: column;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-400);
 
-  font-family: 'Poppins', sans-serif;
+  background-color: hsl(var(--clr-bg));
+  color: hsl(var(--clr-text));
 }
 
 /* MAIN */
@@ -43,8 +83,8 @@ main{
   bottom: 0;right: 0;
   margin: 0;
 
-  font-family: 'Indie Flower', cursive;
-  font-size: 1.25rem;
+  font-family: var(--ff-cursive);
+  font-size: var(--fs-600);
 }
 
 /* DATE */
