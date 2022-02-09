@@ -10,7 +10,6 @@ export function loop(callback) {
         if (elapsedTime === 0)
             prevTime = 0;
         dt = elapsedTime - prevTime;
-        //* Main code goes here *//
         callback({
             startTime,
             currTime,
@@ -18,7 +17,6 @@ export function loop(callback) {
             prevTime,
             dt,
         });
-        //* ******************* *//
         prevTime = elapsedTime;
     }
     requestAnimationFrame(animate);

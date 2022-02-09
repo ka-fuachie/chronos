@@ -90,15 +90,23 @@ export class DateUI {
   private milliseconds: number
   public currDate: Date
 
+  private hourHand:SVGRectElement
+  private minuteHand:SVGRectElement
+  private secondHand:SVGRectElement
+
   constructor(
     private date: TextElement,
     private hours: TextElement,
     private minutes: TextElement,
     private suffix: TextElement,
-    private hands: SVGGElement
+    hands: SVGGElement
   ){
     this.milliseconds = 0
     this.currDate = new Date()
+
+    this.hourHand = hands.querySelector('#hour')!
+    this.minuteHand = hands.querySelector('#minute')!
+    this.secondHand = hands.querySelector('#second')!
   }
 
   start(){
@@ -123,13 +131,24 @@ export class DateUI {
   stop() {
     endLoop()
   }
+
+  //! Fix rotation at 0deg
+  animateHands(timeArr: number[]) {
+    const [hours, minutes, seconds] = timeArr
+    this.secondHand.style.transform = `rotateZ(${seconds * 6}deg)`
+    this.minuteHand.style.transform = `rotateZ(${minutes * 6}deg)`
+    this.hourHand.style.transform = `rotateZ(${hours * 30}deg)`
+  }
   
   updateDate() {
     this.date.textContent = getFormattedDate(getDate(this.currDate))
   }
 
   updateTime() {
-    const [h, m, s] = getFormattedTime(getTime(this.currDate)).split(' ')
+    const timeArr = getTime(this.currDate)
+    this.animateHands(timeArr)
+
+    const [h, m, s] = getFormattedTime(timeArr).split(' ')
     this.hours.textContent = h
     this.minutes.textContent = m
     this.suffix.textContent = s
