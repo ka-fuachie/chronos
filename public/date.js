@@ -1,3 +1,4 @@
+import { endLoop, loop } from "./utils/updateLoop.js";
 const DaysOfTheWeek = [
     'Monday',
     'Tuesday',
@@ -48,22 +49,29 @@ export function getFormattedDate(dateArr) {
         }
         return `${day}${suffix}`;
     })();
-    const monthStr = Months[month - 1];
-    return `${dayOfWeekStr} ${dayStr} ${monthStr}, ${year}`;
+    const monthStr = Months[month];
+    return `${dayOfWeekStr}, ${dayStr} ${monthStr}, ${year}`;
 }
 export function getFormattedTime(timeArr) {
     const [hours, minutes, seconds] = timeArr;
-    if (hours > 12) {
-        return `${hours - 12} ${minutes} ${'pm'}`;
-    }
-    else if (hours > 0) {
-        return `${hours} ${minutes} ${'am'}`;
+    let minuteStr;
+    if (minutes < 10) {
+        minuteStr = `0${minutes}`;
     }
     else {
-        return `12 ${minutes} ${'am'}`;
+        minuteStr = `${minutes}`;
+    }
+    if (hours > 12) {
+        return `${hours - 12} ${minuteStr} ${'pm'}`;
+    }
+    else if (hours > 0) {
+        return `${hours} ${minuteStr} ${'am'}`;
+    }
+    else {
+        return `12 ${minuteStr} ${'am'}`;
     }
 }
-class DateUI {
+export class DateUI {
     constructor(date, hours, minutes, suffix, hands) {
         this.date = date;
         this.hours = hours;
@@ -71,9 +79,32 @@ class DateUI {
         this.suffix = suffix;
         this.hands = hands;
         this.milliseconds = 0;
+        this.currDate = new Date();
     }
-    start() { }
-    stop() { }
-    updateDate() { }
-    updateTime() { }
+    start() {
+        this.currDate = new Date();
+        this.updateDate();
+        this.updateTime();
+        loop(({ dt }) => {
+            this.milliseconds += dt;
+            if (this.milliseconds >= 1000) {
+                this.currDate = new Date();
+                this.updateTime();
+                this.updateDate();
+                this.milliseconds -= 1000;
+            }
+        });
+    }
+    stop() {
+        endLoop();
+    }
+    updateDate() {
+        this.date.textContent = getFormattedDate(getDate(this.currDate));
+    }
+    updateTime() {
+        const [h, m, s] = getFormattedTime(getTime(this.currDate)).split(' ');
+        this.hours.textContent = h;
+        this.minutes.textContent = m;
+        this.suffix.textContent = s;
+    }
 }

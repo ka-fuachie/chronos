@@ -1,3 +1,5 @@
+import { endLoop, loop } from "./utils/updateLoop.js"
+
 type TextElement = HTMLParagraphElement | HTMLSpanElement
 
 const DaysOfTheWeek = [
@@ -58,39 +60,78 @@ export function getFormattedDate(dateArr: number[]): string {
 
     return `${day}${suffix}`
   })()
-  const monthStr = Months[month - 1]
+  const monthStr = Months[month]
 
-  return `${dayOfWeekStr} ${dayStr} ${monthStr}, ${year}`
+  return `${dayOfWeekStr}, ${dayStr} ${monthStr}, ${year}`
 }
 
 export function getFormattedTime(timeArr: number[]): string {
   const [hours, minutes, seconds] = timeArr
 
+  let minuteStr: string
+  if(minutes < 10){
+    minuteStr = `0${minutes}`
+  }else{
+    minuteStr = `${minutes}`
+  }
+
   if(hours > 12){
-    return `${hours - 12} ${minutes} ${'pm'}`
+    return `${hours - 12} ${minuteStr} ${'pm'}`
   }
   else if(hours > 0){
-    return `${hours} ${minutes} ${'am'}`
+    return `${hours} ${minuteStr} ${'am'}`
   }
   else{
-    return `12 ${minutes} ${'am'}`
+    return `12 ${minuteStr} ${'am'}`
   }
 }
 
-class DateUI {
+export class DateUI {
   private milliseconds: number
+  public currDate: Date
+
   constructor(
-    public date: TextElement,
-    public hours: TextElement,
-    public minutes: TextElement,
-    public suffix: TextElement,
-    public hands: SVGGElement
+    private date: TextElement,
+    private hours: TextElement,
+    private minutes: TextElement,
+    private suffix: TextElement,
+    private hands: SVGGElement
   ){
     this.milliseconds = 0
+    this.currDate = new Date()
   }
 
-  start(){}
-  stop() {}
-  updateDate() {}
-  updateTime() {}
+  start(){
+    this.currDate = new Date()
+    this.updateDate()
+    this.updateTime()
+
+    loop(({dt}) => {
+      this.milliseconds += dt
+
+      if (this.milliseconds >= 1000) {
+        this.currDate = new Date()
+
+        this.updateTime()
+        this.updateDate()
+    
+        this.milliseconds -= 1000
+      }  
+    })
+  }
+
+  stop() {
+    endLoop()
+  }
+  
+  updateDate() {
+    this.date.textContent = getFormattedDate(getDate(this.currDate))
+  }
+
+  updateTime() {
+    const [h, m, s] = getFormattedTime(getTime(this.currDate)).split(' ')
+    this.hours.textContent = h
+    this.minutes.textContent = m
+    this.suffix.textContent = s
+  }
 }
