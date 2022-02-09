@@ -27,13 +27,18 @@ body{
   --clr-black: 0 0% 0%;
   --clr-white: 0 0% 100%;
 
-  --fs-400: 0.875rem;
-  --fs-500: 1rem;
+  --fs-500: 0.875rem;
   --fs-600: 1.25rem;
-  --fs-700: 1.5rem;
 
   --ff-sans: 'Poppins', sans-serif;
   --ff-cursive: 'Indie Flower', cursive;
+}
+
+@media (min-width: 30em) {
+  :root {
+    --fs-500: 1rem;
+    --fs-600: 1.5rem;
+  }
 }
 
 body {
@@ -58,7 +63,7 @@ body{
   display: flex;
   flex-direction: column;
   font-family: var(--ff-sans);
-  font-size: var(--fs-400);
+  font-size: var(--fs-500);
 
   background-color: hsl(var(--clr-bg));
   color: hsl(var(--clr-text));
@@ -83,6 +88,12 @@ main{
 
 .clock #clock-svg{
   transform: scale(0.8);
+}
+@media (min-width: 30em) {
+  .clock #clock-svg{
+    transform: scale(0.95);
+    padding: 0.5rem
+  }
 }
 
 .clock #clock-svg #frame{
@@ -129,6 +140,11 @@ main{
 .date #date-svg{
   fill: hsl(var(--clr-text) / 0.5);
 }
+@media (min-width: 30em) {
+  .date #date-svg{
+    transform: scale(1.5);
+  }
+}
 
 /* FOOTER */
 footer{
@@ -138,4 +154,11 @@ footer{
 
 footer #github-svg{
   fill: hsl(var(--clr-theme));
+  margin: 0.5em;
+  transform: scale(0.8);
+}
+@media (min-width: 30em) {
+  footer #github-svg{
+    transform: scale(1);
+  }
 }
