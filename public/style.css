@@ -76,6 +76,37 @@ main{
 /* CLOCK */
 .clock{
   position: relative;
+
+  display: grid;
+  place-content: center;
+}
+
+.clock #clock-svg{
+  transform: scale(0.8);
+}
+
+.clock #clock-svg #frame{
+  stroke: hsl(var(--clr-theme));
+}
+
+.clock #clock-svg #knob{
+  fill: hsl(var(--clr-theme));
+}
+
+.clock #clock-svg #main-points{
+  fill: hsl(0 0% 40%);
+}
+
+.dark .clock #clock-svg #main-points{
+  fill: hsl(0 0% 65%);
+}
+
+.clock #clock-svg #mini-points{
+  fill: hsl(0 0% 70%);
+}
+
+.dark .clock #clock-svg #mini-points{
+  fill: hsl(0 0% 27%);
 }
 
 .clock > p{
@@ -95,8 +126,16 @@ main{
   justify-content: center;
 }
 
+.date #date-svg{
+  fill: hsl(var(--clr-text) / 0.5);
+}
+
 /* FOOTER */
 footer{
   display: flex;
   justify-content: flex-end;
+}
+
+footer #github-svg{
+  fill: hsl(var(--clr-theme));
 }
