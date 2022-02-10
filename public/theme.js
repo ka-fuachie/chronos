@@ -6,7 +6,6 @@ export var Theme;
 })(Theme || (Theme = {}));
 export function getThemeSetting() {
     const setting = localStorage.getItem('theme');
-    console.log(setting, 'is retrieved from localstorage');
     if (setting === Theme.LIGHT.toString())
         return Theme.LIGHT;
     else if (setting === Theme.DARK.toString())
@@ -37,11 +36,9 @@ export function updateTheme(setting) {
             break;
         case Theme.SYSTEM:
             if (matchMedia('(prefers-color-scheme: light)').matches) {
-                console.log('light🌞 is color scheme');
                 setLightTheme();
             }
             else {
-                console.log('dark🌑 is color scheme');
                 setDarkTheme();
             }
             break;
@@ -52,6 +49,5 @@ export function updateTheme(setting) {
             break;
     }
     localStorage.setItem('theme', newSetting.toString());
-    console.log(localStorage);
     return newSetting;
 }

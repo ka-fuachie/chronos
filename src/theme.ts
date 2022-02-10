@@ -6,7 +6,6 @@ export enum Theme {
 
 export function getThemeSetting(): Theme {
   const setting = localStorage.getItem('theme')
-  console.log(setting, 'is retrieved from localstorage')
 
   if (setting === Theme.LIGHT.toString()) return Theme.LIGHT
   else if (setting === Theme.DARK.toString()) return Theme.DARK
@@ -43,10 +42,8 @@ export function updateTheme(setting?: Theme): Theme {
 
     case Theme.SYSTEM:
       if (matchMedia('(prefers-color-scheme: light)').matches) {
-        console.log('light🌞 is color scheme')
         setLightTheme()
       } else {
-        console.log('dark🌑 is color scheme')
         setDarkTheme()
       }
 
@@ -61,6 +58,5 @@ export function updateTheme(setting?: Theme): Theme {
   }
 
   localStorage.setItem('theme', newSetting!.toString())
-  console.log(localStorage)
   return newSetting!
 }
