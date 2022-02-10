@@ -2,6 +2,12 @@ import { endLoop, loop } from "./utils/updateLoop.js"
 
 type TextElement = HTMLParagraphElement | HTMLSpanElement
 
+enum ClockHand {
+  'SECOND',
+  'MINUTE',
+  'HOUR'
+}
+
 const DaysOfTheWeek = [
   'Monday',
   'Tuesday',
@@ -94,6 +100,12 @@ export class DateUI {
   private minuteHand:SVGRectElement
   private secondHand:SVGRectElement
 
+  private revs: {
+    seconds: number,
+    minutes: number,
+    hours: number
+  }
+
   constructor(
     private date: TextElement,
     private hours: TextElement,
@@ -107,6 +119,12 @@ export class DateUI {
     this.hourHand = hands.querySelector('#hour')!
     this.minuteHand = hands.querySelector('#minute')!
     this.secondHand = hands.querySelector('#second')!
+
+    this.revs = {
+      seconds: 0,
+      minutes: 0,
+      hours: 0
+    }
   }
 
   start(){
@@ -118,10 +136,10 @@ export class DateUI {
       this.milliseconds += dt
 
       if (this.milliseconds >= 1000) {
-        this.currDate = new Date()
+        this.currDate = new Date(Date.now() - 1000000)
 
         this.updateTime()
-        this.updateDate()
+        this.updateDate()        
     
         this.milliseconds -= 1000
       }  
@@ -132,12 +150,27 @@ export class DateUI {
     endLoop()
   }
 
-  //! Fix rotation at 0deg
-  animateHands(timeArr: number[]) {
+  tick(timeArr: number[]) {
     const [hours, minutes, seconds] = timeArr
-    this.secondHand.style.transform = `rotateZ(${seconds * 6}deg)`
-    this.minuteHand.style.transform = `rotateZ(${minutes * 6}deg)`
-    this.hourHand.style.transform = `rotateZ(${hours * 30}deg)`
+
+    if(seconds === 0){
+      this.revs.seconds ++
+
+      if(minutes === 0){
+        this.revs.minutes ++
+
+        if(hours === 1){
+          this.revs.hours ++
+        }
+      }
+    }
+
+    this.secondHand.style.transform = 
+      `rotateZ(${(seconds * 6) + (this.revs.seconds * 360)}deg)`
+    this.minuteHand.style.transform = 
+      `rotateZ(${(minutes * 6) + (this.revs.minutes * 360)}deg)`
+    this.hourHand.style.transform = 
+      `rotateZ(${(hours * 30) + (this.revs.hours * 360)}deg)`
   }
   
   updateDate() {
@@ -146,7 +179,7 @@ export class DateUI {
 
   updateTime() {
     const timeArr = getTime(this.currDate)
-    this.animateHands(timeArr)
+    this.tick(timeArr)
 
     const [h, m, s] = getFormattedTime(timeArr).split(' ')
     this.hours.textContent = h
