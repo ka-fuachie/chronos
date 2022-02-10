@@ -22,13 +22,19 @@ function setLightTheme(): void {
   document.body.classList.remove('dark')
 }
 
-function toggleTheme(): Theme{
+function toggleTheme(): Theme {
   const newSetting = document.body.classList.toggle('dark') ? Theme.DARK : Theme.LIGHT
 
   return newSetting
 }
 
+function handleSystemThemeChange(e: MediaQueryListEvent) {
+  if(e.matches) setLightTheme()
+  else setDarkTheme()
+}
+
 export function updateTheme(setting?: Theme): Theme {
+  matchMedia('(prefers-color-scheme: light)').removeEventListener('change', handleSystemThemeChange)
   let newSetting = setting
 
   switch (setting) {
@@ -46,6 +52,8 @@ export function updateTheme(setting?: Theme): Theme {
       } else {
         setDarkTheme()
       }
+
+      matchMedia('(prefers-color-scheme: light)').addEventListener('change', handleSystemThemeChange)
 
       break;
 
