@@ -187,6 +187,6 @@ export class DateUI {
     const [h, m, s] = getFormattedTime(timeArr).split(' ')
     this.hours.textContent = h
     this.minutes.textContent = m
-    this.suffix.textContent = s
+    this.suffix.textContent = s.toUpperCase()
   }
 }
