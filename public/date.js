@@ -130,7 +130,10 @@ export class DateUI {
             `rotateZ(${(hours * 30) + (minutes * 0.5) + (this.revs.hours * 360)}deg)`;
     }
     updateDate() {
-        this.date.textContent = getFormattedDate(getDate(this.currDate));
+        const newDate = getFormattedDate(getDate(this.currDate));
+        if (this.date.textContent === newDate)
+            return;
+        this.date.textContent = newDate;
     }
     updateTime() {
         const timeArr = getTime(this.currDate);

@@ -148,7 +148,7 @@ main{
 
 #clock-svg #hands > * {
   transform-origin: center;
-  transition: transform 250ms cubic-bezier(0, 0, 0.5, 1);
+  transition: transform 150ms cubic-bezier(0.44, 1.1, 0.12, 1.32);
 }
 
 .clock > p{
