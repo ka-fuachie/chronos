@@ -6,12 +6,15 @@ export var Theme;
 })(Theme || (Theme = {}));
 export function getThemeSetting() {
     const setting = localStorage.getItem('theme');
-    if (setting === null)
-        return Theme.SYSTEM;
-    else if (setting === Theme.LIGHT.toString())
+    console.log(setting, 'is retrieved from localstorage');
+    if (setting === Theme.LIGHT.toString())
         return Theme.LIGHT;
-    else
+    else if (setting === Theme.DARK.toString())
         return Theme.DARK;
+    else if (setting === Theme.SYSTEM.toString())
+        return Theme.SYSTEM;
+    else
+        return Theme.SYSTEM;
 }
 function setDarkTheme() {
     document.body.classList.add('dark');
@@ -34,12 +37,13 @@ export function updateTheme(setting) {
             break;
         case Theme.SYSTEM:
             if (matchMedia('(prefers-color-scheme: light)').matches) {
+                console.log('light🌞 is color scheme');
                 setLightTheme();
             }
             else {
+                console.log('dark🌑 is color scheme');
                 setDarkTheme();
             }
-            Theme.SYSTEM;
             break;
         case undefined:
             newSetting = toggleTheme();
@@ -48,5 +52,6 @@ export function updateTheme(setting) {
             break;
     }
     localStorage.setItem('theme', newSetting.toString());
+    console.log(localStorage);
     return newSetting;
 }
