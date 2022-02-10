@@ -87,7 +87,7 @@ body.dark{
 /***************/
 
 *{
-  transition: color calc((150 / var(--speed, 1)) * 1ms), fill calc((250 / var(--speed, 1)) * 1ms), background-color 250ms
+  transition: color calc((150 / var(--speed, 1)) * 1ms), fill calc((250 / var(--speed, 1)) * 1ms), stroke calc((250 / var(--speed, 1)) * 1ms), background-color 250ms
 }
 /* !Edit scroll bar */
 /* BODY */
