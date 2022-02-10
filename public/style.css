@@ -83,6 +83,10 @@ body.dark{
 /***************/
 /**   PAGE    **/
 /***************/
+
+*{
+  transition: color calc((150 / var(--speed, 1)) * 1ms), fill calc((250 / var(--speed, 1)) * 1ms), background-color 250ms
+}
 /* !Edit scroll bar */
 /* BODY */
 body{
@@ -187,6 +191,8 @@ footer #github-svg{
   fill: hsl(var(--clr-theme));
   margin: 0.5em;
   transform: scale(0.8);
+
+  --speed: 0.5
 }
 @media (min-width: 30em) {
   footer #github-svg{
