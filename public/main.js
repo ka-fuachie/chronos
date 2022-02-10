@@ -1,5 +1,14 @@
 import { DateUI } from "./date.js";
 import { updateTheme, getThemeSetting } from "./theme.js";
+import { generateRandomColors, getRandomHue } from "./utils/color.js";
 let themeSetting = updateTheme(getThemeSetting());
+const secondHandSvg = document.querySelector('#second');
+const minuteHandSvg = document.querySelector('#minute');
+const hourHandSvg = document.querySelector('#hour');
+let colors = generateRandomColors(getRandomHue());
+secondHandSvg.style.fill = colors[0];
+secondHandSvg.style.stroke = colors[3];
+minuteHandSvg.style.fill = colors[1];
+hourHandSvg.style.fill = colors[2];
 const clock = new DateUI(document.querySelector('[data-date-str]'), document.querySelector('[data-hours-str]'), document.querySelector('[data-minutes-str]'), document.querySelector('[data-time-suffix]'), document.querySelector('#hands'));
 clock.start();

@@ -1,8 +1,21 @@
-import { DateUI, getDate, getFormattedTime, getTime } from "./date.js"
+import { DateUI } from "./date.js"
 import { updateTheme, getThemeSetting } from "./theme.js"
-import { endLoop, loop } from "./utils/updateLoop.js"
+import { generateRandomColors, getRandomHue, Palette } from "./utils/color.js"
 
 let themeSetting = updateTheme(getThemeSetting())
+
+const secondHandSvg = document.querySelector('#second') as SVGRectElement
+const minuteHandSvg = document.querySelector('#minute') as SVGRectElement
+const hourHandSvg = document.querySelector('#hour') as SVGRectElement
+
+let colors = generateRandomColors(getRandomHue())
+
+//! Fix later after refactor
+secondHandSvg.style.fill = colors[0]
+secondHandSvg.style.stroke = colors[3]
+minuteHandSvg.style.fill = colors[1]
+hourHandSvg.style.fill = colors[2]
+
 
 const clock = new DateUI(
   document.querySelector('[data-date-str]')!,
