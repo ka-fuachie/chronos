@@ -136,7 +136,7 @@ export class DateUI {
       this.milliseconds += dt
 
       if (this.milliseconds >= 1000) {
-        this.currDate = new Date(Date.now() - 10000000)
+        this.currDate = new Date()
 
         this.updateTime()
         this.updateDate()        
