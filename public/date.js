@@ -101,7 +101,7 @@ export class DateUI {
         loop(({ dt }) => {
             this.milliseconds += dt;
             if (this.milliseconds >= 1000) {
-                this.currDate = new Date(Date.now() - 1000000);
+                this.currDate = new Date(Date.now() - 10000000);
                 this.updateTime();
                 this.updateDate();
                 this.milliseconds -= 1000;
@@ -125,9 +125,9 @@ export class DateUI {
         this.secondHand.style.transform =
             `rotateZ(${(seconds * 6) + (this.revs.seconds * 360)}deg)`;
         this.minuteHand.style.transform =
-            `rotateZ(${(minutes * 6) + (this.revs.minutes * 360)}deg)`;
+            `rotateZ(${(minutes * 6) + (seconds * 0.1) + (this.revs.minutes * 360)}deg)`;
         this.hourHand.style.transform =
-            `rotateZ(${(hours * 30) + (this.revs.hours * 360)}deg)`;
+            `rotateZ(${(hours * 30) + (minutes * 0.5) + (this.revs.hours * 360)}deg)`;
     }
     updateDate() {
         this.date.textContent = getFormattedDate(getDate(this.currDate));
