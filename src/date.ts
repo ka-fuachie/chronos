@@ -125,6 +125,7 @@ export class DateUI {
       minutes: 0,
       hours: 0
     }
+
   }
 
   start(){
@@ -159,8 +160,8 @@ export class DateUI {
       if(minutes === 0){
         this.revs.minutes ++
 
-        if(hours === 1){
-          this.revs.hours ++
+        if(hours === 0){          
+          this.revs.hours += 2
         }
       }
     }

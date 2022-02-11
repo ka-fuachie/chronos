@@ -117,8 +117,8 @@ export class DateUI {
             this.revs.seconds++;
             if (minutes === 0) {
                 this.revs.minutes++;
-                if (hours === 1) {
-                    this.revs.hours++;
+                if (hours === 0) {
+                    this.revs.hours += 2;
                 }
             }
         }
