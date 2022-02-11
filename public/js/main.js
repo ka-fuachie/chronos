@@ -1,5 +1,5 @@
 import { getFormattedDate, getDate, getFormattedTime, getTime } from "./utils/date.js";
-import { updateTheme, getThemeSetting } from "./theme.js";
+import { updateTheme, getThemeSetting, Theme, setDarkTheme, setLightTheme } from "./theme.js";
 import { generateRandomColors, getRandomHue } from "./utils/color.js";
 import { loop } from "./utils/updateLoop.js";
 let themeSetting = updateTheme(getThemeSetting());
@@ -9,10 +9,18 @@ const clockHands = {
     hour: document.querySelector('#hour'),
 };
 let colors = generateRandomColors(getRandomHue());
-clockHands.second.style.fill = colors[0];
-clockHands.second.style.stroke = colors[3];
+clockHands.second.style.fill = matchMedia('(prefers-color-scheme: light)').matches ? colors[3] : colors[0];
 clockHands.minute.style.fill = colors[1];
 clockHands.hour.style.fill = colors[2];
+matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    if (themeSetting === Theme.SYSTEM) {
+        if (e.matches)
+            setLightTheme();
+        else
+            setDarkTheme();
+        clockHands.second.style.fill = e.matches ? colors[3] : colors[0];
+    }
+});
 const dateField = document.querySelector('[data-date-str]');
 const timeField = {
     hours: document.querySelector('[data-hours-str]'),

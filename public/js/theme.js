@@ -15,24 +15,17 @@ export function getThemeSetting() {
     else
         return Theme.SYSTEM;
 }
-function setDarkTheme() {
+export function setDarkTheme() {
     document.body.classList.add('dark');
 }
-function setLightTheme() {
+export function setLightTheme() {
     document.body.classList.remove('dark');
 }
 function toggleTheme() {
     const newSetting = document.body.classList.toggle('dark') ? Theme.DARK : Theme.LIGHT;
     return newSetting;
 }
-function handleSystemThemeChange(e) {
-    if (e.matches)
-        setLightTheme();
-    else
-        setDarkTheme();
-}
 export function updateTheme(setting) {
-    matchMedia('(prefers-color-scheme: light)').removeEventListener('change', handleSystemThemeChange);
     let newSetting = setting;
     switch (setting) {
         case Theme.LIGHT:
@@ -48,7 +41,6 @@ export function updateTheme(setting) {
             else {
                 setDarkTheme();
             }
-            matchMedia('(prefers-color-scheme: light)').addEventListener('change', handleSystemThemeChange);
             break;
         case undefined:
             newSetting = toggleTheme();

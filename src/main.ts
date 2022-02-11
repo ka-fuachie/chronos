@@ -1,13 +1,25 @@
-import { getFormattedDate, getDate, getFormattedTime, getTime } from "./utils/date.js"
-import { updateTheme, getThemeSetting } from "./theme.js"
-import { generateRandomColors, getRandomHue, Palette } from "./utils/color.js"
+import { 
+  getFormattedDate, 
+  getDate, 
+  getFormattedTime, 
+  getTime 
+} from "./utils/date.js"
+import { 
+  updateTheme, 
+  getThemeSetting, 
+  Theme ,
+  setDarkTheme,
+  setLightTheme
+} from "./theme.js"
+import { 
+  generateRandomColors, 
+  getRandomHue
+} from "./utils/color.js"
 import { loop } from "./utils/updateLoop.js"
-
-type TextElement = HTMLParagraphElement | HTMLSpanElement
-
 
 let themeSetting = updateTheme(getThemeSetting())
 
+//* CLOCK HAND COLORS
 const clockHands = {
   second: document.querySelector('#second') as SVGRectElement,
   minute: document.querySelector('#minute') as SVGRectElement,
@@ -16,13 +28,19 @@ const clockHands = {
 
 let colors = generateRandomColors(getRandomHue())
 
-//! Fix later after refactor
-clockHands.second.style.fill = colors[0]
-clockHands.second.style.stroke = colors[3]
+clockHands.second.style.fill = matchMedia('(prefers-color-scheme: light)').matches ? colors[3]: colors[0]
 clockHands.minute.style.fill = colors[1]
 clockHands.hour.style.fill = colors[2]
 
 
+matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+  if(themeSetting === Theme.SYSTEM){
+    if(e.matches) setLightTheme()
+    else setDarkTheme()
+
+    clockHands.second.style.fill = e.matches ? colors[3]: colors[0]
+  } 
+})
 
 //* CLOCK AND DATE
 const dateField = document.querySelector('[data-date-str]')!
@@ -66,7 +84,7 @@ loop(({dt}) => {
 
 })
 
-// Helper functions for date and time(clock)
+//* HELPER FUNCTIONS
 function updateTimeAndDate() {
   dateStr = getFormattedDate(getDate(currDate))
   timeArr = getTime(currDate)

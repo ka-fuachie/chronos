@@ -14,11 +14,11 @@ export function getThemeSetting(): Theme {
   else return Theme.SYSTEM
 }
 
-function setDarkTheme(): void {
+export function setDarkTheme(): void {
   document.body.classList.add('dark')
 }
 
-function setLightTheme(): void {
+export function setLightTheme(): void {
   document.body.classList.remove('dark')
 }
 
@@ -28,13 +28,7 @@ function toggleTheme(): Theme {
   return newSetting
 }
 
-function handleSystemThemeChange(e: MediaQueryListEvent) {
-  if(e.matches) setLightTheme()
-  else setDarkTheme()
-}
-
 export function updateTheme(setting?: Theme): Theme {
-  matchMedia('(prefers-color-scheme: light)').removeEventListener('change', handleSystemThemeChange)
   let newSetting = setting
 
   switch (setting) {
@@ -52,9 +46,7 @@ export function updateTheme(setting?: Theme): Theme {
       } else {
         setDarkTheme()
       }
-
-      matchMedia('(prefers-color-scheme: light)').addEventListener('change', handleSystemThemeChange)
-
+      
       break;
 
     case undefined:
