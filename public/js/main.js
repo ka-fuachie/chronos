@@ -2,14 +2,22 @@ import { getFormattedDate, getDate, getFormattedTime, getTime } from "./utils/da
 import { updateTheme, getThemeSetting, Theme, setDarkTheme, setLightTheme } from "./theme.js";
 import { generateRandomColors, getRandomHue } from "./utils/color.js";
 import { loop } from "./utils/updateLoop.js";
+const darkModeBtn = document.querySelector('.dark-mode');
 let themeSetting = updateTheme(getThemeSetting());
+darkModeBtn.setAttribute('aria-pressed', `${!isLightTheme()}`);
+darkModeBtn.addEventListener('click', () => {
+    themeSetting = updateTheme();
+    const isDark = themeSetting === Theme.DARK;
+    clockHands.second.style.fill = isLightTheme() ? colors[3] : colors[0];
+    darkModeBtn.setAttribute('aria-pressed', `${!isLightTheme()}`);
+});
 const clockHands = {
     second: document.querySelector('#second'),
     minute: document.querySelector('#minute'),
     hour: document.querySelector('#hour'),
 };
 let colors = generateRandomColors(getRandomHue());
-clockHands.second.style.fill = matchMedia('(prefers-color-scheme: light)').matches ? colors[3] : colors[0];
+clockHands.second.style.fill = isLightTheme() ? colors[3] : colors[0];
 clockHands.minute.style.fill = colors[1];
 clockHands.hour.style.fill = colors[2];
 matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
@@ -18,7 +26,7 @@ matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
             setLightTheme();
         else
             setDarkTheme();
-        clockHands.second.style.fill = e.matches ? colors[3] : colors[0];
+        clockHands.second.style.fill = isLightTheme() ? colors[3] : colors[0];
     }
 });
 const dateField = document.querySelector('[data-date-str]');
@@ -52,6 +60,13 @@ loop(({ dt }) => {
         timer -= 1000;
     }
 });
+function isLightTheme() {
+    if (themeSetting === Theme.SYSTEM) {
+        return matchMedia('(prefers-color-scheme: light)').matches;
+    }
+    else
+        return themeSetting === Theme.LIGHT;
+}
 function updateTimeAndDate() {
     dateStr = getFormattedDate(getDate(currDate));
     timeArr = getTime(currDate);

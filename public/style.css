@@ -92,7 +92,8 @@ body.dark{
     stroke calc((250 / var(--speed, 1)) * 1ms), 
     background-color 250ms
 }
-/* !Edit scroll bar */
+/* TODO: Edit scroll bar */
+/* TODO: Make icons responsive by using relative units */
 /* BODY */
 body{
   display: flex;
@@ -121,6 +122,10 @@ header{
   color: hsl(var(--clr-text) / 0.5);
   margin-right: 0.5em;
   font-size: var(--fs-400);
+}
+
+.controls .dark-mode[aria-pressed = 'false']{
+  background-color: red;
 }
 
 /* MAIN */
