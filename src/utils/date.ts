@@ -54,6 +54,11 @@ export function getFormattedDate(dateArr: number[]): string {
         break;
     }
 
+    //Exception for 11, 12 and 13
+    if(day === 11 || day === 12 || day === 13 ){
+      suffix = 'th'
+    }
+
     return `${day}${suffix}`
   })()
   const monthStr = Months[month]

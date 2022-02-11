@@ -46,6 +46,9 @@ export function getFormattedDate(dateArr) {
                 suffix = 'th';
                 break;
         }
+        if (day === 11 || day === 12 || day === 13) {
+            suffix = 'th';
+        }
         return `${day}${suffix}`;
     })();
     const monthStr = Months[month];
