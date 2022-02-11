@@ -61,7 +61,7 @@ export function getFormattedTime(timeArr) {
         minuteStr = `${minutes}`;
     }
     if (hours >= 12) {
-        return `${(hours % 12) + 12} ${minuteStr} ${'pm'}`;
+        return `${(hours - 12) || 12} ${minuteStr} ${'pm'}`;
     }
     else if (hours > 0) {
         return `${hours} ${minuteStr} ${'am'}`;
