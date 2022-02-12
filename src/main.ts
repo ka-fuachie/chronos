@@ -12,7 +12,7 @@ import {
   setLightTheme
 } from "./theme.js"
 import { 
-  generateRandomColors, 
+  generateRandomHslValues, 
   getRandomHue
 } from "./utils/color.js"
 import { loop } from "./utils/updateLoop.js"
@@ -28,34 +28,37 @@ darkModeBtn.addEventListener('click', () => {
   themeSetting = updateTheme()
   const isDark = themeSetting === Theme.DARK
 
-  clockHands.second.style.fill = isLightTheme() ? colors[3]: colors[0]
   darkModeBtn.setAttribute('aria-pressed', `${!isLightTheme()}`)
 })
 
 //* CLOCK HAND COLORS
-const clockHands = {
-  second: document.querySelector('#second') as SVGRectElement,
-  minute: document.querySelector('#minute') as SVGRectElement,
-  hour: document.querySelector('#hour') as SVGRectElement,
-}
 
-let colors = generateRandomColors(getRandomHue())
+let hslValues = generateRandomHslValues(getRandomHue())
 
-clockHands.second.style.fill = isLightTheme() ? colors[3]: colors[0]
-clockHands.minute.style.fill = colors[1]
-clockHands.hour.style.fill = colors[2]
+const root= document.documentElement
+
+root.style.setProperty('--clr-gen-400', hslValues[0])
+root.style.setProperty('--clr-gen-300', hslValues[1])
+root.style.setProperty('--clr-gen-200', hslValues[2])
+root.style.setProperty('--clr-gen-100', hslValues[3])
+// clockHands.second.style.fill = isLightTheme() ? colors[3]: colors[0]
+// clockHands.minute.style.fill = colors[1]
+// clockHands.hour.style.fill = colors[2]
 
 
 matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
   if(themeSetting === Theme.SYSTEM){
     if(e.matches) setLightTheme()
     else setDarkTheme()
-
-    clockHands.second.style.fill = isLightTheme() ? colors[3]: colors[0]
   } 
 })
 
 //* CLOCK AND DATE
+const clockHands = {
+  second: document.querySelector('#second') as SVGRectElement,
+  minute: document.querySelector('#minute') as SVGRectElement,
+  hour: document.querySelector('#hour') as SVGRectElement,
+}
 const dateField = document.querySelector('[data-date-str]')!
 const timeField = {
   hours: document.querySelector('[data-hours-str]')!,

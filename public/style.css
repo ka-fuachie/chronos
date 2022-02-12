@@ -297,15 +297,15 @@ main{
   fill: hsl(var(--clr-gen-200))
 }
 
-#clock-svg #hands > #hour {
+#clock-svg #hands > #minute {
   fill: hsl(var(--clr-gen-300))
 }
 
-#clock-svg #hands > #hour {
-  fill: hsl(var(--clr-gen-100))
+#clock-svg #hands > #second {
+  fill: hsl(var(--clr-gen-100));
 }
 
-.dark #hands > #hour{
+.dark #clock-svg #hands > #second{
   fill: hsl(var(--clr-gen-400))
 }
 
