@@ -14,6 +14,7 @@ body{
 button{
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 a{
@@ -127,8 +128,17 @@ header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2em;
+  flex-direction: column-reverse;
+  
+  gap: 1em;
   padding: 1em 1.5em;
+}
+
+@media (min-width: 30em) {
+  header {
+    flex-direction: row;
+    gap: 1.5em;
+  }
 }
 
 #heading{
@@ -143,10 +153,18 @@ header{
 }
 
 .controls{
+  align-self: flex-end;
+
   display: flex;
   gap: 1em;
 
   align-items: center;
+}
+
+@media (min-width: 30em) {
+  .controls {
+    align-self: center;
+  }
 }
 
 .controls .mute{
