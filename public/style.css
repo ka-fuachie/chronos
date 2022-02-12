@@ -39,6 +39,11 @@ a{
   --clr-blue: 210 100% 30%;
   --clr-yellow: 48 100% 50%;
 
+  --clr-gen-400: 0 0% 0%;
+  --clr-gen-300: 0 0% 0%;
+  --clr-gen-200: 0 0% 0%;
+  --clr-gen-100: 0 0% 0%;
+
   --fs-400: 0.75rem;
   --fs-500: 0.875rem;
   --fs-600: 1.25rem;
@@ -254,13 +259,9 @@ main{
 }
 
 .clock #clock-svg{
-  transform: scale(0.8);
-}
-@media (min-width: 30em) {
-  .clock #clock-svg{
-    transform: scale(0.95);
-    padding: 0.5rem
-  }
+  width: 15.625em;
+  height: 15.625em;
+  padding: 0.5rem
 }
 
 .clock #clock-svg #frame{
@@ -292,6 +293,22 @@ main{
   transition: transform 150ms cubic-bezier(0.44, 1.1, 0.12, 1.32);
 }
 
+#clock-svg #hands > #hour {
+  fill: hsl(var(--clr-gen-200))
+}
+
+#clock-svg #hands > #hour {
+  fill: hsl(var(--clr-gen-300))
+}
+
+#clock-svg #hands > #hour {
+  fill: hsl(var(--clr-gen-100))
+}
+
+.dark #hands > #hour{
+  fill: hsl(var(--clr-gen-400))
+}
+
 .clock > p{
   position: absolute;
   bottom: 0;right: 0;
@@ -311,11 +328,9 @@ main{
 
 .date #date-svg{
   fill: hsl(var(--clr-text) / 0.5);
-}
-@media (min-width: 30em) {
-  .date #date-svg{
-    transform: scale(1.5);
-  }
+
+  width: 1.875em;
+  height: 1.875em;
 }
 
 /* FOOTER */
@@ -327,12 +342,9 @@ footer{
 footer #github-svg{
   fill: hsl(var(--clr-theme));
   margin: 0.5em;
-  transform: scale(0.8);
-
+  
+  width: 3.75em;
+  height: 3.75em;
+  
   --speed: 0.5
-}
-@media (min-width: 30em) {
-  footer #github-svg{
-    transform: scale(1);
-  }
 }
