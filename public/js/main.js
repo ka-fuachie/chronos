@@ -35,6 +35,14 @@ const timeField = {
     minutes: document.querySelector('[data-minutes-str]'),
     suffix: document.querySelector('[data-time-suffix]')
 };
+const tickAudio = new Audio('./assets/sounds/clock-tick.mp3');
+let canplayAudio = false;
+const muteClockBtn = document.querySelector('.mute');
+muteClockBtn.setAttribute('aria-pressed', `${!canplayAudio}`);
+muteClockBtn.addEventListener('click', () => {
+    canplayAudio = !canplayAudio;
+    muteClockBtn.setAttribute('aria-pressed', `${!canplayAudio}`);
+});
 let currDate = new Date(0);
 let revs = {
     seconds: 0,
@@ -53,6 +61,7 @@ loop(({ dt }) => {
     timer += dt;
     if (timer >= 1000) {
         currDate = new Date();
+        playTickAudio();
         updateTimeAndDate();
         updateClockHandRotations();
         updateTimeField();
@@ -66,6 +75,10 @@ function isLightTheme() {
     }
     else
         return themeSetting === Theme.LIGHT;
+}
+function playTickAudio() {
+    if (canplayAudio)
+        tickAudio.play().catch(() => { });
 }
 function updateTimeAndDate() {
     dateStr = getFormattedDate(getDate(currDate));

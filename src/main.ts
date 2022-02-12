@@ -27,7 +27,7 @@ darkModeBtn.setAttribute('aria-pressed', `${!isLightTheme()}`)
 darkModeBtn.addEventListener('click', () => {
   themeSetting = updateTheme()
   const isDark = themeSetting === Theme.DARK
-
+  
   darkModeBtn.setAttribute('aria-pressed', `${!isLightTheme()}`)
 })
 
@@ -66,6 +66,19 @@ const timeField = {
   suffix: document.querySelector('[data-time-suffix]')!
 }
 
+const tickAudio = new Audio('./assets/sounds/clock-tick.mp3')
+
+let canplayAudio = false
+
+const muteClockBtn = document.querySelector('.mute') as HTMLButtonElement
+muteClockBtn.setAttribute('aria-pressed', `${!canplayAudio}`)
+
+muteClockBtn.addEventListener('click', () => {
+  canplayAudio = !canplayAudio
+  muteClockBtn.setAttribute('aria-pressed', `${!canplayAudio}`)
+})
+
+
 let currDate = new Date(0)
 
 let revs = {
@@ -90,6 +103,7 @@ loop(({dt}) => {
   if (timer >= 1000) {
     currDate = new Date()
 
+    playTickAudio()
     updateTimeAndDate()
     updateClockHandRotations()
     updateTimeField()
@@ -106,6 +120,10 @@ function isLightTheme():boolean {
     return matchMedia('(prefers-color-scheme: light)').matches
   }
   else return themeSetting === Theme.LIGHT
+}
+
+function playTickAudio():void {
+  if(canplayAudio) tickAudio.play().catch(() => {})
 }
 
 function updateTimeAndDate() {

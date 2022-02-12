@@ -142,6 +142,53 @@ header{
   font-size: var(--fs-400);
 }
 
+.controls{
+  display: flex;
+  gap: 1em;
+
+  align-items: center;
+}
+
+.controls .mute{
+  width: 2em;
+  height: 2em;
+
+  border-radius: 50%;
+
+  background-color: hsl(var(--clr-theme) / 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.mute > svg {
+  width: 1.25em;
+  height: 1.25em;
+
+  position: absolute;
+  top: 50%; left: 50%;
+
+  transition: transform 250ms;
+  --speed: 5
+}
+
+.mute > #sound{
+  fill: hsl(var(--clr-text));
+  transform: scale(1) translate(-50%, -50%);
+}
+.mute[aria-pressed = 'true'] > #sound {
+  fill: hsl(var(--clr-text) / 0);
+  transform: scale(3) translate(-50%, -50%);
+}
+
+.mute > #mute{
+  fill: hsl(var(--clr-text) / 0);
+  transform: scale(3) translate(-50%, -50%);
+}
+.mute[aria-pressed = 'true'] > #mute {
+  fill: hsl(var(--clr-text));
+  transform: scale(1) translate(-50%, -50%);
+}
+
 /* Values are calculated */
 .controls .dark-mode{
   background-color: rgb(114, 114, 114);
