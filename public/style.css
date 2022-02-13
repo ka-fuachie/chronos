@@ -10,6 +10,8 @@
 body{
   margin: 0;padding: 0;
   min-height: 100vh;
+
+  overflow-x: hidden;
 }
 button{
   border: none;
@@ -90,35 +92,34 @@ body.dark{
 	clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
 	-webkit-clip-path: inset(50%) !important;
 		clip-path: inset(50%) !important;  /* 2 */
-	height: 1px !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	padding: 0 !important;
-	position: absolute !important;
-	width: 1px !important;
-	white-space: nowrap !important;            /* 3 */
-}
-
-
-/***************/
-/**   PAGE    **/
-/***************/
-
-*{
-  transition: color calc((150 / var(--speed, 1)) * 1ms), 
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important;            /* 3 */
+  }
+  
+  
+  /***************/
+  /**   PAGE    **/
+  /***************/
+  
+  *{
+    transition: color calc((150 / var(--speed, 1)) * 1ms), 
     fill calc((250 / var(--speed, 1)) * 1ms), 
     stroke calc((250 / var(--speed, 1)) * 1ms), 
     background-color 250ms
-}
-/* TODO: Edit scroll bar */
-/* TODO: Make icons responsive by using relative units */
-/* BODY */
+  }
+  /* TODO: Edit scroll bar */
+  /* BODY */
 body{
   display: flex;
   flex-direction: column;
   font-family: var(--ff-sans);
   font-size: var(--fs-500);
-
+  
   background-color: hsl(var(--clr-bg));
   color: hsl(var(--clr-text));
 }
@@ -144,6 +145,8 @@ header{
 #heading{
   font-size: var(--fs-500);
   font-weight: 400;
+
+  animation: reveal-in 500ms linear ;
 }
 
 #heading .helper{
@@ -152,13 +155,19 @@ header{
   font-size: var(--fs-400);
 }
 
+#heading .meaning{
+  clip-path: inset(0% 100% 0% 0%);
+  animation: type-in 2000ms 3000ms steps(19) forwards ;
+}
+
 .controls{
   align-self: flex-end;
-
+  
   display: flex;
   gap: 1em;
-
+  
   align-items: center;
+
 }
 
 @media (min-width: 30em) {
@@ -167,25 +176,32 @@ header{
   }
 }
 
+.controls > * {
+  transform: translateY(-300%);
+  animation: drop-in 750ms calc((5000 + var(--drop-delay, 0)) * 1ms) cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
 .controls .mute{
   width: 2em;
   height: 2em;
-
+  
   border-radius: 50%;
-
+  
   background-color: hsl(var(--clr-theme) / 0.15);
   position: relative;
   overflow: hidden;
+
+  --drop-delay: 250;
 }
 
 .mute > svg {
   width: 1.25em;
   height: 1.25em;
-
+  
   position: absolute;
   top: 50%; left: 50%;
-
-  transition: transform 250ms;
+  
+  transition: transform 150ms;
   --speed: 5
 }
 
@@ -213,12 +229,12 @@ header{
   border-radius: 1em;
   height: 2em;
   width: 3.5em;
-
+  
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5em;
-
+  
   background-color: hsl(var(--clr-text-dark) / 0.25);
   
   position: relative;
@@ -232,7 +248,7 @@ header{
   --speed: 5;
   width: 0.75rem;
   height: 0.75rem;
-
+  
   transition: transform 250ms ease-out;
 }
 
@@ -257,7 +273,7 @@ header{
 .dark-mode .thumb{
   position: absolute;
   top: 0.25em; left: 0.25em;
-
+  
   background-color: hsl(var(--clr-white));
   height: 1.5em;
   aspect-ratio: 1;
@@ -269,7 +285,7 @@ header{
 
 .dark-mode[aria-pressed = 'true'] .thumb{
   transform: translateX(100%);
-
+  
   background-color: hsl(var(--clr-white) / 0.25);
 }
 
@@ -309,7 +325,7 @@ header{
 /* MAIN */
 main{
   flex: 1;
-
+  
   display: grid;
   place-content: center;
   gap: 2em;
@@ -321,12 +337,14 @@ main{
 
   display: grid;
   place-content: center;
+
+  animation: fade-in 1500ms cubic-bezier(1, 0.05, 0.72, 0.99);
 }
 
 .clock #clock-svg{
   width: 15.625em;
   height: 15.625em;
-  padding: 0.5rem
+  padding: 0.5rem;
 }
 
 .clock #clock-svg #frame{
@@ -378,7 +396,7 @@ main{
   position: absolute;
   bottom: 0;right: 0;
   margin: 0;
-
+  
   font-family: var(--ff-cursive);
   font-size: var(--fs-600);
 }
@@ -389,6 +407,8 @@ main{
   align-items: center;
   gap: 1em;
   justify-content: center;
+
+  animation: fade-in 500ms;
 }
 
 .date #date-svg{
@@ -396,6 +416,15 @@ main{
 
   width: 1.875em;
   height: 1.875em;
+
+}
+
+.date p{
+  width: 0ch;
+  white-space: nowrap;
+
+  overflow: hidden;
+  animation: grow-width 1000ms 1500ms forwards;
 }
 
 /* FOOTER */
@@ -412,4 +441,69 @@ footer #github-svg{
   height: 3.75em;
   
   --speed: 0.5
+}
+
+
+/***************/
+/**ANIMATIONS **/
+/***************/
+
+@keyframes fade-in {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-in {
+  from{
+    clip-path: inset(100% 0% 0% 0%);
+  }
+  to{
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+@keyframes type-in {
+  from{
+    clip-path: inset(0% 100% 0% 0%);
+  }
+  to{
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from{
+    transform: translate(500%);
+  }
+  to{
+    transform: translate(0%);
+  }
+}
+
+@keyframes drop-in {
+  from{
+    transform: translateY(-300%);
+  }
+  to{
+    transform: translateY(0%);
+  }
+}
+
+@keyframes grow-width {
+  to{
+    width: 21.5ch;
+  }
+}
+
+@keyframes shrink {
+  from{
+    transform: scale(5);
+  }
+  to{
+    transform: scale(1);
+  }
 }
