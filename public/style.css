@@ -203,11 +203,12 @@ header{
   background-color: hsl(var(--clr-theme) / 0.15);
   position: relative;
   overflow: hidden;
-
+  
   --drop-delay: 250;
 }
 
 .mute[aria-pressed = 'true'] {
+  background-color: hsl(var(--clr-blue) / 0.35);
   opacity: 1;
 }
 
