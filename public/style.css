@@ -179,6 +179,18 @@ header{
 .controls > * {
   transform: translateY(-300%);
   animation: drop-in 750ms calc((5000 + var(--drop-delay, 0)) * 1ms) cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+
+  transition: filter 500ms;
+}
+
+.controls > *:hover {
+  filter: blur(1px);
+}
+
+.controls > *:focus-visible {
+  outline: 2px solid hsl(var(--clr-blue));
+  filter: blur(0.75px);
+  outline-offset: 0.3em;
 }
 
 .controls .mute{
@@ -186,12 +198,17 @@ header{
   height: 2em;
   
   border-radius: 50%;
+  opacity: 0.5;
   
   background-color: hsl(var(--clr-theme) / 0.15);
   position: relative;
   overflow: hidden;
 
   --drop-delay: 250;
+}
+
+.mute[aria-pressed = 'true'] {
+  opacity: 1;
 }
 
 .mute > svg {
@@ -440,7 +457,19 @@ footer #github-svg{
   width: 3.75em;
   height: 3.75em;
   
+  transition: filter 500ms;
   --speed: 0.5
+}
+
+footer a:hover {
+  filter: blur(1px);
+}
+
+footer a:focus-visible {
+  outline: 2px solid hsl(var(--clr-blue));
+  filter: blur(0.75px);
+
+  outline-offset: -0.3em;
 }
 
 
