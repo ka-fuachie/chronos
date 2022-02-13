@@ -1,11 +1,11 @@
 const DaysOfTheWeek = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday',
 ];
 const Months = [
     'January',
@@ -29,7 +29,7 @@ export function getTime(date) {
 }
 export function getFormattedDate(dateArr) {
     const [dayOfWeek, day, month, year] = dateArr;
-    const dayOfWeekStr = DaysOfTheWeek[dayOfWeek - 1];
+    const dayOfWeekStr = DaysOfTheWeek[dayOfWeek];
     const dayStr = (function () {
         let suffix;
         switch (day % 10) {
