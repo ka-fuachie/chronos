@@ -41,6 +41,7 @@ a{
 
   --clr-blue: 210 100% 30%;
   --clr-yellow: 48 100% 50%;
+  --clr-red: 2 100% 45%;
 
   --clr-gen-400: 0 0% 0%;
   --clr-gen-300: 0 0% 0%;
@@ -208,7 +209,7 @@ header{
 }
 
 .mute[aria-pressed = 'true'] {
-  background-color: hsl(var(--clr-blue) / 0.35);
+  background-color: hsl(var(--clr-red) / 0.5);
   opacity: 1;
 }
 
