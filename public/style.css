@@ -225,19 +225,20 @@ header{
 }
 
 .mute > #sound{
-  fill: hsl(var(--clr-white));
+  fill: hsl(var(--clr-text));
   transform: scale(1) translate(-50%, -50%);
 }
 .mute[aria-pressed = 'true'] > #sound {
+  fill: hsl(var(--clr-text) / 0);
   transform: scale(3) translate(-50%, -50%);
 }
 
 .mute > #mute{
-  fill: hsl(var(--clr-text) / 0);
+  fill: hsl(var(--clr-white) / 0);
   transform: scale(3) translate(-50%, -50%);
 }
 .mute[aria-pressed = 'true'] > #mute {
-  fill: hsl(var(--clr-text));
+  fill: hsl(var(--clr-white));
   transform: scale(1) translate(-50%, -50%);
 }
 
