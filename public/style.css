@@ -209,7 +209,7 @@ header{
 }
 
 .mute[aria-pressed = 'true'] {
-  background-color: hsl(var(--clr-red) / 0.5);
+  background-color: hsl(var(--clr-red));
   opacity: 1;
 }
 
